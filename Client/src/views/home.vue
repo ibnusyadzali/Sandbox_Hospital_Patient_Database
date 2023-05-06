@@ -5,13 +5,17 @@ import pasiensRow from '../components/pasiensRow.vue'
 
 export default {
   components: {
-    pasiensRow,
+    pasiensRow
   },
   computed: {
     ...mapState(usePasienStore, ['pasiens'])
   },
   methods: {
-    ...mapActions(usePasienStore, ['fetchAllPasiens'])
+    ...mapActions(usePasienStore, ['fetchAllPasiens']),
+    ...mapActions(usePasienStore, ['addForm']),
+    async add() {
+      this.addForm()
+    }
   },
   created() {
     this.fetchAllPasiens()
@@ -30,37 +34,34 @@ export default {
       </div>
     </div>
 
-    <div class="container-fluid py-4 d-flex flex-row justify-content-between">
+    <div class="container-fluid py-4 d-flex flex-row justify-content-between col-9">
       <h4>Total Pasien: {{ pasiens.length }}</h4>
-      <button type="button" class="btn shadow-lg btn-outline-secondary addbtn">Add New Pasien</button>
+      <button @click.prevent="add" type="button" class="btn btn-outline-secondary addpasienbtn">
+        Add New Pasien
+      </button>
     </div>
 
-    <div class="tbl-container text-center bdr">
-      <table class="table table-hover overflow-auto">
-        <thead>
-          <tr>
-            <th>No.</th>
-            <th>ID</th>
-            <th>Name</th>
-            <th>Sex</th>
-            <th>Religion</th>
-            <th>Phone</th>
-            <th>Address</th>
-            <th>NIK</th>
-            <th>Action</th>
-          </tr>
-        </thead>
-        <tbody>
-          <pasiensRow
-          v-for="(el, i) in pasiens"
-          :key="el.id"
-          :el="el"
-          :i="i"
-        />
-        </tbody>
-      </table>
+    <div class="container text-center d-flex justify-content-center col-9 bdr tbl table-wrapper-scroll-y my-custom-scrollbar">
+      <!-- <div class=""> -->
+        <table class="table table-hover">
+          <thead>
+            <tr>
+              <th>No.</th>
+              <th>ID</th>
+              <th>Name</th>
+              <th>Sex</th>
+              <th>Religion</th>
+              <th>Phone</th>
+              <th>Address</th>
+              <th>NIK</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            <pasiensRow v-for="(el, i) in pasiens" :key="el.id" :el="el" :i="i" />
+          </tbody>
+        </table>
+      <!-- </div> -->
     </div>
-
-   
   </div>
 </template>

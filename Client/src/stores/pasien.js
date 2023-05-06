@@ -1,146 +1,147 @@
-import { defineStore } from "pinia";
-import axios from "axios";
+import { defineStore } from 'pinia'
+import axios from 'axios'
 // const server = "http://localhost:3000/";
-const server = "http://194.233.68.255:5000/";
+const server = 'http://194.233.68.255:5000/'
 
-export const usePasienStore = defineStore("pasien", {
+export const usePasienStore = defineStore('pasien', {
   state() {
-    if (localStorage.getItem("pasien"))
-      return JSON.parse(localStorage.getItem("pasien"));
+    if (localStorage.getItem('pasien')) return JSON.parse(localStorage.getItem('pasien'))
     return {
       pasiens: [],
-      pasien:{},
-      name: "",
-      sex: "",
-      religion: "",
-      phone: "",
-      address: "",
-      nik: "",
-    };
+      pasiendata: {},
+      isEdit: false,
+      editPasienData: {}
+    }
   },
   actions: {
+    async addPasien(dataNewPasien) {
+      try {
+        console.log(dataNewPasien)
+        await axios({
+          method: 'POST',
+          url: server + 'pasien',
+          data: {
+            name: dataNewPasien.name,
+            sex: dataNewPasien.sex,
+            religion: dataNewPasien.religion,
+            phone: dataNewPasien.phone,
+            address: dataNewPasien.address,
+            nik: dataNewPasien.nik
+          },
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          withCredentials: true
+        })
+        Swal.fire('Great!', 'Success added new pasien', 'success')
+        this.isEdit = false
+        this.router.push('/')
+      } catch (error) {
+        Swal.fire({
+          icon: 'error',
+          title: 'Something Wrong !',
+          text: `Failed to add new pasien`
+        })
+      }
+    },
 
     async fetchAllPasiens() {
       try {
         const { data } = await axios({
-          method: "GET",
-          url: server + "pasien",
-        });
-        this.pasiens = data.result;
-
+          method: 'GET',
+          url: server + 'pasien'
+        })
+        this.pasiens = data.result
       } catch (error) {
-        console.log(error);
+        console.log(error)
       }
     },
-    
+
+    async fetchPasienDetail(pasienId) {
+      try {
+        const { data } = await axios({
+          method: 'GET',
+          url: server + `pasien/${pasienId}`
+        })
+        this.pasiendata = data.result
+        this.router.push(`/detail/${pasienId}`)
+      } catch (error) {
+        console.log(error)
+      }
+    },
+
+    async fetchEditPasien(id) {
+      try {
+        this.isEdit = true
+        const { data } = await axios({
+          method: 'GET',
+          url: server + `pasien/${id}`
+        })
+        this.editPasienData = data.result
+        this.router.push(`/form`)
+      } catch (error) {
+        Swal.fire({
+          icon: 'error',
+          title: 'Something Wrong !',
+          text: `Failed to get pasien data`
+        })
+      }
+    },
+
+    async updatePasien(updateDataPasien,id) {
+      try {
+        await axios({
+          method: 'PUT',
+          url: server + `pasien/${id}`,
+          data: {
+            name: updateDataPasien.name,
+            sex: updateDataPasien.sex,
+            religion: updateDataPasien.religion,
+            phone: updateDataPasien.phone,
+            address: updateDataPasien.address,
+            nik: updateDataPasien.nik
+          },
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          withCredentials: true
+        })
+        Swal.fire('Great!', 'Success edit pasien data', 'success')
+        this.isEdit = false
+        this.editPasienData = {}
+        this.fetchPasienDetail(id)
+      } catch (error) {
+        Swal.fire({
+          icon: 'error',
+          title: 'Something Wrong !',
+          text: `Failed to add new pasien`
+        })
+      }
+    },
+
+    async addForm() {
+      this.isEdit = false
+      this.editPasienData = {}
+      this.router.push(`/form`)
+    },
+
+    async cancelEdit(id) {
+      this.isEdit = false
+      this.editPasienData = {}
+      this.router.push(`/detail/${id}`)
+    },
+
     async deletePasienById(id) {
       try {
         const { data } = await axios({
-          method: "DELETE",
+          method: 'DELETE',
           url: server + `pasien/${id}`,
-          headers: {
-            // 'Access-Control-Allow-Origin': '*',
-            // 'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',
-            // 'Access-Control-Allow-Headers': 'Origin, Content-Type, X-Auth-Token',
-            'Content-Type' : 'application/x-www-form-urlencoded'
-          },
           withCredentials: true
-        });
+        })
         await this.fetchAllPasiens()
-
       } catch (error) {
-        console.log("aaaaa")
-        console.log(error);
+        console.log(error)
       }
-    },
-
-    // async register(dataRegis) {
-    //   try {
-    //     await axios({
-    //       method: "POST",
-    //       url: server + "customers/register",
-    //       data: {
-    //         username: dataRegis.username,
-    //         email: dataRegis.email,
-    //         password: dataRegis.password,
-    //       },
-    //     });
-    //     Swal.fire("Great!", "Success create a new user", "success");
-    //     this.router.push("/");
-    //     (this.email = ""),
-    //       (this.password = ""),
-    //       (this.phoneNumber = ""),
-    //       (this.address = "");
-    //   } catch (error) {
-    //     Swal.fire({
-    //       icon: "error",
-    //       title: "Oops...",
-    //       text: `${error.response.data.message}`
-    //     });
-    //   }
-    // },
-    // async login(dataLogin) {
-    //   try {
-    //     const { data } = await axios({
-    //       method: "POST",
-    //       url: server + "customers/login",
-    //       data: {
-    //         email: dataLogin.email,
-    //         password: dataLogin.password,
-    //       },
-    //     });
-    //     this.page = "home";
-    //     this.username = data.username;
-    //     localStorage.setItem("access_token", data.access_token);
-    //     localStorage.setItem("username", data.username);
-    //     this.isLogin = true
-    //       this.password = ""
-    //       this.email = ""
-    //       Swal.fire({
-    //         title: `Welcome on board ${data.username}`,
-    //         showClass: {
-    //           popup: "animate__animated animate__fadeInDown",
-    //         },
-    //         hideClass: {
-    //           popup: "animate__animated animate__fadeOutUp",
-    //         }
-    //       })
-    //       this.router.push("/")
-    //   } catch (error) {
-    //     Swal.fire({
-    //       icon: "error",
-    //       title: "Oops...",
-    //       text: `${error.response.data.message}`
-    //     });
-    //   }
-    // },
-    // async logout() {
-    //   try {
-    //     Swal.fire({
-    //       title: `Bey bye~ ${this.username}`,
-    //       showClass: {
-    //         popup: "animate__animated animate__fadeInDown",
-    //       },
-    //       hideClass: {
-    //         popup: "animate__animated animate__fadeOutUp",
-    //       }
-    //     })
-    //     localStorage.clear();
-    //     this.username = ""
-    //     this.email = "";
-    //     this.password = "";
-    //     this.isLogin = false;
-    //     this.page = "home";
-    //     this.router.push("/");
-    //   } catch (error) {
-    //     console.log(error);
-    //   }
-    // },
-    
-    // async moveHome() {
-    //   this.page = "home";
-    //   this.router.push("/");
-    // },
-
-  },
-});
+    }
+  }
+})

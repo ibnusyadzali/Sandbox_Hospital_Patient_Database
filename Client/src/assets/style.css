@@ -1,10 +1,11 @@
-body, html {
-    height: 100%;
-  }
+body,
+html {
+  height: 100%;
+}
 
 body {
-background-color: #F6F1F1;
-color: #19A7CE;
+  background-color: #f6f1f1;
+  color: #19a7ce;
 
   /* background-image: url("https://images.unsplash.com/photo-1486520299386-6d106b22014b?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1169&q=80");
   height: 100%;
@@ -17,38 +18,55 @@ color: #19A7CE;
 } */
 
 .navbar {
-  background-color: #146C94;
-  color: #F6F1F1;
+  background-color: #146c94;
+  color: #f6f1f1;
 }
 
 .nav-link {
-  color: #F6F1F1;
+  color: #f6f1f1;
 }
 
 .headertext {
   text-shadow: 10px;
 }
 
-.addbtn {
-  color: #19A7CE;
-  outline-color: #146C94;
+.addpasienbtn {
+  color: #19a7ce;
+  outline-color: #146c94;
 }
-.addbtn:hover {
-  color: #146C94;
-  background-color: #AFD3E2 ;
+.addpasienbtn:hover {
+  color: #146c94;
+  background-color: #afd3e2;
 }
 
-.tbl-container {
-  background-color: #AFD3E2;
+.male:checked {
+  color: red;
+}
+
+.tbl {
+  background-color: #afd3e2;
+}
+
+.my-custom-scrollbar {
+  position: relative;
+  max-height: 400px;
+  overflow: auto;
+}
+.table-wrapper-scroll-y {
+  display: block;
 }
 
 .bdr {
   border-radius: 10px;
-  overflow: hidden;
 }
 
 .icon {
-  color: #146C94;
+  color: #146c94;
+}
+
+.pasienImg {
+  max-height: 250px;
+  max-width: 250px;
 }
 
 .detailicon:hover {

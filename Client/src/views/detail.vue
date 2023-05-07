@@ -26,7 +26,8 @@ export default {
     <div class="container py-3">
       <div class="row">
         <div class="col-12 my-4 text-center">
-          <h1 class="fw-bold">Pasien ID {{ pasiendata.id }} detail</h1>
+          <h1 v-if="pasiendata.id" class="fw-bold">Pasien ID {{ pasiendata.id }} detail</h1>
+          <h1 v-if="pasiendata.id === undefined" class="fw-bold">Pasien Not Found</h1>
         </div>
       </div>
     </div>
@@ -42,6 +43,7 @@ export default {
         <div class="card-body d-flex flex-row justify-content-between ms-3">
           <h5 class="card-title">Pasien Data</h5>
           <a 
+          v-if="pasiendata.id"
             @click.prevent="fetchEdit(pasiendata.id)"
           href="" class="btn btn-sm"
             ><i class="fa-solid fa-pen-to-square fa-xl icon editicon"></i
@@ -57,12 +59,18 @@ export default {
             <p>Address</p>
           </div>
           <div class="col-auto text-start">
-            <p>: {{ pasiendata.name }}</p>
-            <p>: {{ pasiendata.sex }}</p>
-            <p>: {{ pasiendata.religion }}</p>
-            <p>: {{ pasiendata.phone }}</p>
-            <p>: {{ pasiendata.nik }}</p>
-            <p>: {{ pasiendata.address }}</p>
+            <p v-if="pasiendata.name === undefined">: Not Found</p>
+            <p v-if="pasiendata.name">: {{ pasiendata.name }}</p>
+            <p v-if="pasiendata.sex === undefined">: Not Found</p>
+            <p v-if="pasiendata.sex">: {{ pasiendata.sex }}</p>
+            <p v-if="pasiendata.religion === undefined">: Not Found</p>
+            <p v-if="pasiendata.religion">: {{ pasiendata.religion }}</p>
+            <p v-if="pasiendata.phone === undefined">: Not Found</p>
+            <p v-if="pasiendata.phone">: {{ pasiendata.phone }}</p>
+            <p v-if="pasiendata.nik === undefined">: Not Found</p>
+            <p v-if="pasiendata.nik">: {{ pasiendata.nik }}</p>
+            <p v-if="pasiendata.address === undefined">: Not Found</p>
+            <p v-if="pasiendata.address">: {{ pasiendata.address }}</p>
           </div>
         </div>
         <div class="card-body d-flex justify-content-center">

@@ -58,14 +58,12 @@ export const usePasienStore = defineStore('pasien', {
     },
 
     async fetchPasienDetail(pasienId) {
-      console.log('test masuk apa ngga')
       try {
         const { data } = await axios({
           method: 'GET',
           url: server + `pasien/${pasienId}`
         })
         this.pasiendata = data.result
-        console.log(this.pasiendata)
         this.router.push(`/detail/${pasienId}`)
       } catch (error) {
         console.log(error)

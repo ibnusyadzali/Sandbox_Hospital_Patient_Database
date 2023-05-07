@@ -42,7 +42,6 @@ export default {
     </div>
 
     <div class="container text-center d-flex justify-content-center col-9 bdr tbl table-wrapper-scroll-y my-custom-scrollbar">
-      <!-- <div class=""> -->
         <table class="table table-hover">
           <thead>
             <tr>
@@ -61,7 +60,6 @@ export default {
             <pasiensRow v-for="(el, i) in pasiens" :key="el.id" :el="el" :i="i" />
           </tbody>
         </table>
-      <!-- </div> -->
     </div>
   </div>
 </template>

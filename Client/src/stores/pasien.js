@@ -1,7 +1,7 @@
 import { defineStore } from 'pinia'
 import axios from 'axios'
-// const server = "http://localhost:3000/";
-const server = 'http://194.233.68.255:5000/'
+const server = "http://localhost:5000/";
+// const server = 'http://194.233.68.255:5000/'
 
 export const usePasienStore = defineStore('pasien', {
   state() {
@@ -58,12 +58,14 @@ export const usePasienStore = defineStore('pasien', {
     },
 
     async fetchPasienDetail(pasienId) {
+      console.log('test masuk apa ngga')
       try {
         const { data } = await axios({
           method: 'GET',
           url: server + `pasien/${pasienId}`
         })
         this.pasiendata = data.result
+        console.log(this.pasiendata)
         this.router.push(`/detail/${pasienId}`)
       } catch (error) {
         console.log(error)

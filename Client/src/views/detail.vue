@@ -13,6 +13,8 @@ export default {
             this.fetchEditPasien(id)
         }
   },
+  beforeCreate() {
+  },
   created() {
     this.fetchPasienDetail(this.$route.params.id)
   }

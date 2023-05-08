@@ -6,16 +6,7 @@ html {
 body {
   background-color: #f6f1f1;
   color: #146c94;
-
-  /* background-image: url("https://images.unsplash.com/photo-1486520299386-6d106b22014b?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1169&q=80");
-  height: 100%;
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: cover; */
 }
-/* .fontstyle {
-    font-family: 'Fredoka One'
-} */
 
 .navbar {
   background-color: #146c94;

@@ -1,7 +1,6 @@
 import { defineStore } from 'pinia'
 import axios from 'axios'
 const server = "http://localhost:5000/";
-// const server = 'http://194.233.68.255:5000/'
 
 export const usePasienStore = defineStore('pasien', {
   state() {

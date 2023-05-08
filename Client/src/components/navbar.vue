@@ -1,5 +1,4 @@
 <script>
-// import { mapState, mapActions } from 'pinia'
 
 export default {
   computed: {
